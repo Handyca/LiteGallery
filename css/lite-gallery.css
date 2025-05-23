@@ -5,774 +5,795 @@
 
 /* General Reset */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    padding: 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  padding: 20px;
 }
 
 h1 {
-    text-align: center;
-    margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .gallery-container {
-    max-width: 1000px;
-    margin: 0 auto 30px;
+  max-width: 1000px;
+  margin: 0 auto 30px;
 }
 
 /* Main Gallery Container */
 .lite-gallery {
-    position: relative;
-    width: 100%;
-    background-color: #f5f5f5;
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  width: 100%;
+  /* background-color: #f5f5f5; */
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Main Gallery Image Display */
 .gallery-main {
-    position: relative;
-    width: 100%;
-    height: 500px;
-    overflow: hidden;
-    background-color: transparent; /* Removed white background */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+  background-color: transparent; /* Removed white background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .gallery-main img {
-    cursor: zoom-in;
-    z-index: 10; /* Ensure the image is above other elements to receive clicks */
-    position: relative; /* Needed for z-index to work */
+  cursor: zoom-in;
+  z-index: 10; /* Ensure the image is above other elements to receive clicks */
+  position: relative; /* Needed for z-index to work */
 }
 
 .gallery-main img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* More pronounced "springy" zoom effect */
-    box-shadow: none; /* Removed box shadow on images */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* More pronounced "springy" zoom effect */
+  box-shadow: none; /* Removed box shadow on images */
 }
 
 /* Enhanced styles for zoomed images */
 .gallery-main img.zoomed {
-    cursor: grab;
+  cursor: grab;
 }
 
 /* Cursors for different zoom states */
 .gallery-main:not(.zooming) img.zoomed:active {
-    cursor: grabbing;
+  cursor: grabbing;
 }
 
 /* Make sure zoomed images aren't clipped by parent containers */
 .gallery-main.zooming {
-    overflow: visible !important;
+  overflow: visible !important;
 }
 
 /* Handle container overflow better when zooming */
 .lite-gallery {
-    isolation: isolate;
+  isolation: isolate;
 }
 
 /* Image Counter */
 .gallery-counter {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 14px;
-    z-index: 10;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  z-index: 10;
 }
 
 /* Scale and Rotation Info */
 .gallery-transform-info {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 14px;
-    z-index: 10;
-    display: flex;
-    gap: 10px;
-    transition: opacity 0.3s ease;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 14px;
+  z-index: 10;
+  display: flex;
+  gap: 10px;
+  transition: opacity 0.3s ease;
 }
 
 /* Fullscreen light mode styles for transform info */
 .gallery-fullscreen .gallery-transform-info {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    padding: 8px 15px; /* Slightly larger in fullscreen */
-    font-size: 16px; /* Bigger font in fullscreen */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility */
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 8px 15px; /* Slightly larger in fullscreen */
+  font-size: 16px; /* Bigger font in fullscreen */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add shadow for better visibility */
 }
 
 /* Zoom level indicator for fullscreen mode */
 .gallery-zoom-level-indicator {
-    position: absolute;
-    bottom: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.65);
-    border-radius: 20px;
-    padding: 8px 15px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    z-index: 20;
-    opacity: 0.8;
-    transition: opacity 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.65);
+  border-radius: 20px;
+  padding: 8px 15px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  z-index: 20;
+  opacity: 0.8;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .gallery-zoom-level-indicator:hover {
-    opacity: 1;
-    transform: translateX(-50%) scale(1.05);
+  opacity: 1;
+  transform: translateX(-50%) scale(1.05);
 }
 
 .zoom-level-step {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.4);
-    position: relative;
-    cursor: help;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  position: relative;
+  cursor: help;
 }
 
 .zoom-level-step.active {
-    background-color: #ffcc00;
-    transform: scale(1.2);
-    box-shadow: 0 0 8px rgba(255, 204, 0, 0.8);
-    transition: all 0.2s ease-out;
+  background-color: #ffcc00;
+  transform: scale(1.2);
+  box-shadow: 0 0 8px rgba(255, 204, 0, 0.8);
+  transition: all 0.2s ease-out;
 }
 
 .zoom-level-step:first-child,
 .zoom-level-step:last-child {
-    width: 30px;
-    height: 20px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    color: white;
+  width: 30px;
+  height: 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: white;
 }
 
 /* Zoom level tooltip */
 .zoom-level-step:hover::after {
-    content: attr(data-level);
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    white-space: nowrap;
-    margin-bottom: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 0.2s ease-out;
+  content: attr(data-level);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.2s ease-out;
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(5px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
 
 .gallery-transform-info .scale-info,
 .gallery-transform-info .rotation-info {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 /* Add styles for the step zoom indicator */
 .gallery-transform-info .scale-info .steps-info {
-    font-size: 12px;
-    opacity: 0.8;
-    font-style: italic;
-    margin-left: 4px;
+  font-size: 12px;
+  opacity: 0.8;
+  font-style: italic;
+  margin-left: 4px;
 }
 
 /* Make step zoom indicator more visible in fullscreen mode */
 .gallery-fullscreen .gallery-transform-info .scale-info .steps-info {
-    font-size: 14px;
-    color: #ffcc00;
+  font-size: 14px;
+  color: #ffcc00;
 }
 
 .gallery-transform-info .icon {
-    margin-right: 5px;
-    width: 16px;
-    height: 16px;
-    display: inline-flex;
+  margin-right: 5px;
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
 }
 
 /* Navigation Controls */
 .gallery-navigation {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 20; /* Increased z-index to ensure it's above the image */
-    pointer-events: none; /* Allow clicks to pass through to the image */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 20; /* Increased z-index to ensure it's above the image */
+  pointer-events: none; /* Allow clicks to pass through to the image */
 }
 
 .gallery-nav-btn {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 15px;
-    transition: all 0.3s ease;
-    z-index: 100;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    pointer-events: auto; /* Ensure buttons still receive clicks */
-    opacity: 0.8; /* Slight transparency by default */
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 15px;
+  transition: all 0.3s ease;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  pointer-events: auto; /* Ensure buttons still receive clicks */
+  opacity: 0.8; /* Slight transparency by default */
 }
 
 .gallery-nav-btn:hover {
-    background-color: rgba(0, 0, 0, 0.7);
-    transform: scale(1.1);
-    opacity: 1;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.7);
+  transform: scale(1.1);
+  opacity: 1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .gallery-nav-btn svg {
-    width: 30px;
-    height: 30px;
-    fill: white;
+  width: 30px;
+  height: 30px;
+  fill: white;
 }
 
 /* Thumbnails Container */
 .gallery-thumbnails {
-    display: flex;
-    overflow-x: auto;
-    padding: 10px;
-    background-color: #f0f0f0;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
-    scroll-behavior: smooth;
-    text-align: center;
+  display: flex;
+  overflow-x: auto;
+  padding: 10px;
+  /* background-color: #f0f0f0; */
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  scroll-behavior: smooth;
+  text-align: center;
 }
 
 .gallery-thumbnail {
-    width: 80px;
-    height: 60px;
-    cursor: pointer;
-    border: 2px solid transparent;
-    border-radius: 4px;
-    overflow: hidden;
-    flex-shrink: 0;
+  width: 80px;
+  height: 60px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .gallery-thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: opacity 0.2s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.2s ease;
 }
 
 .gallery-thumbnail:hover img {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .gallery-thumbnail.active {
-    border-color: #3498db;
+  border-color: #3498db;
 }
 
 /* Toolbar */
 .gallery-toolbar {
-    display: flex;
-    justify-content: flex-end;
-    padding: 10px;
-    background-color: #f1f1f1;
-    border-top: 1px solid #ddd;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  z-index: 1003;
 }
 
 .gallery-tool-btn {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 36px;
-    height: 36px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left: 8px;
-    transition: all 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid transparent;
+  border-radius: 4px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  transition: all 0.3s ease;
 }
 
 .gallery-tool-btn:hover {
-    background-color: #eee;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .gallery-tool-btn svg {
-    width: 20px;
-    height: 20px;
-    fill: #555;
+  width: 20px;
+  height: 20px;
+  fill: white;
 }
 
 .gallery-tool-btn.active {
-    background-color: #3498db;
-    border-color: #2980b9;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  background-color: #3498db;
+  border-color: #2980b9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .gallery-tool-btn.active svg {
-    fill: white;
+  fill: white;
 }
 
 /* Fullscreen button positioned at top right */
 .gallery-fullscreen-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    z-index: 20;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
 }
 
 .gallery-fullscreen-btn:hover {
-    background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .gallery-fullscreen-btn svg {
-    width: 24px;
-    height: 24px;
-    fill: white;
+  width: 24px;
+  height: 24px;
+  fill: white;
 }
 
 /* Exit fullscreen button */
 .gallery-exit-fullscreen-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    z-index: 1010;
-    background-color: rgba(0, 0, 0, 0.6);
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%; /* Make it rounded */
-    cursor: pointer;
-    display: none;  /* Hidden by default, shown in fullscreen */
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 1010;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* Make it rounded */
+  cursor: pointer;
+  display: none; /* Hidden by default, shown in fullscreen */
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
 }
 
 .gallery-exit-fullscreen-btn:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-    transform: scale(1.1);
+  background-color: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
 }
 
 .gallery-exit-fullscreen-btn svg {
-    width: 24px;
-    height: 24px;
-    fill: white;
+  width: 24px;
+  height: 24px;
+  fill: white;
 }
 
 .gallery-fullscreen .gallery-exit-fullscreen-btn {
-    display: flex; /* Show in fullscreen mode */
+  display: flex; /* Show in fullscreen mode */
 }
 
 /* Fullscreen Mode */
 .gallery-fullscreen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: transparent; /* Removed white background */
-    background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.02) 75%, rgba(0, 0, 0, 0.02)), 
-                      linear-gradient(45deg, rgba(0, 0, 0, 0.02) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.02) 75%, rgba(0, 0, 0, 0.02));
-    background-size: 20px 20px;
-    background-position: 0 0, 10px 10px; /* Subtle checkerboard pattern to indicate transparency */
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent; /* Removed white background */
+  background-image: linear-gradient(
+      45deg,
+      rgba(0, 0, 0, 0.02) 25%,
+      transparent 25%,
+      transparent 75%,
+      rgba(0, 0, 0, 0.02) 75%,
+      rgba(0, 0, 0, 0.02)
+    ),
+    linear-gradient(
+      45deg,
+      rgba(0, 0, 0, 0.02) 25%,
+      transparent 25%,
+      transparent 75%,
+      rgba(0, 0, 0, 0.02) 75%,
+      rgba(0, 0, 0, 0.02)
+    );
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px; /* Subtle checkerboard pattern to indicate transparency */
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
 }
 
 .gallery-fullscreen .gallery-main {
-    flex-grow: 1;
-    height: auto;
+  flex-grow: 1;
+  height: auto;
 }
 
 .gallery-fullscreen .gallery-toolbar {
-    background-color: rgba(240, 240, 240, 0.9);
-    border-top: none;
-    position: relative;
-    z-index: 1001; /* Ensure toolbar is above other elements in fullscreen */
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  border-top: none;
+  z-index: 1001; /* Ensure toolbar is above other elements in fullscreen */
 }
 
 .gallery-fullscreen .gallery-tool-btn {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-color: #ddd;
-    z-index: 1001;
-    pointer-events: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+  pointer-events: auto;
 }
 
 .gallery-fullscreen .gallery-tool-btn svg {
-    fill: #555;
+  fill: white;
 }
 
 .gallery-fullscreen .gallery-thumbnails {
-    background-color: rgba(240, 240, 240, 0.9);
-    z-index: 1001;
+  background-color: rgba(240, 240, 240, 0.9);
+  z-index: 1001;
 }
 
 .gallery-fullscreen .gallery-fullscreen-btn,
 .gallery-fullscreen .gallery-nav-btn,
 .gallery-fullscreen .gallery-counter,
 .gallery-fullscreen .gallery-transform-info {
-    pointer-events: auto;
-    z-index: 1002;
+  pointer-events: auto;
+  z-index: 1002;
 }
 
 /* Ensure nav buttons remain visible even when image is zoomed */
 .gallery-main.zooming .gallery-nav-btn {
-    z-index: 1002;
-    opacity: 0.7; /* Make slightly more transparent when zooming */
+  z-index: 1002;
+  opacity: 0.7; /* Make slightly more transparent when zooming */
 }
 
 /* Explicitly ensure the main image receives clicks */
 .gallery-main img.gallery-active-image {
-    cursor: zoom-in;
-    z-index: 10; /* Above navigation background but below navigation buttons */
-    pointer-events: auto !important; /* Force pointer events to be enabled */
+  cursor: zoom-in;
+  z-index: 6; /* Above navigation but below buttons */
+  pointer-events: auto !important; /* Force pointer events to be enabled */
 }
 
 .gallery-fullscreen .gallery-fullscreen-btn {
-    background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 /* Loading Indicator */
 .gallery-loading {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 40px;
-    height: 40px;
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    border-top: 4px solid #3498db;
-    animation: spin 1s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-    0% { transform: translate(-50%, -50%) rotate(0deg); }
-    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 /* Image Error State */
 .gallery-error {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #e74c3c;
-    text-align: center;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #e74c3c;
+  text-align: center;
+  padding: 20px;
 }
 
 .gallery-error svg {
-    width: 50px;
-    height: 50px;
-    fill: #e74c3c;
-    margin-bottom: 10px;
+  width: 50px;
+  height: 50px;
+  fill: #e74c3c;
+  margin-bottom: 10px;
 }
 
 /* Animation for slide transition */
 .gallery-slide-animation {
-    animation: slideAnimation 0.4s ease;
+  animation: slideAnimation 0.4s ease;
 }
 
 @keyframes slideAnimation {
-    from {
-        opacity: 0;
-        transform: translateX(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* Zoom-related styles */
 .gallery-main {
-    cursor: zoom-in;
+  cursor: zoom-in;
 }
 
 /* Enhanced cursor feedback for zoom operations */
 .gallery-main img:not(.zoomed) {
-    cursor: zoom-in;
-    transition: all 0.3s ease;
+  cursor: zoom-in;
+  transition: all 0.3s ease;
 }
 
 .gallery-main img.zoomed {
-    cursor: grab;
+  cursor: grab;
 }
 
 .gallery-main img.zoomed:active {
-    cursor: grabbing;
+  cursor: grabbing;
 }
 
 /* Add subtle highlight effect when hovering over image to indicate it's clickable */
 .gallery-main img:not(.zoomed):hover {
-    filter: brightness(1.05);
-    transform: scale(1.01);
+  filter: brightness(1.05);
+  transform: scale(1.01);
 }
 
 /* Rotate-related styles */
 .gallery-main img.rotate-90 {
-    transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 
 .gallery-main img.rotate-180 {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .gallery-main img.rotate-270 {
-    transform: rotate(270deg);
+  transform: rotate(270deg);
 }
 
 /* Usage Info Section */
 .usage-info {
-    max-width: 900px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border-radius: 4px;
-    border-left: 4px solid #3498db;
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  border-left: 4px solid #3498db;
 }
 
 .usage-info h2 {
-    color: #3498db;
-    margin-bottom: 15px;
+  color: #3498db;
+  margin-bottom: 15px;
 }
 
 .usage-info pre {
-    background-color: #f9f9f9;
-    padding: 15px;
-    border-radius: 4px;
-    overflow-x: auto;
-    border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  padding: 15px;
+  border-radius: 4px;
+  overflow-x: auto;
+  border: 1px solid #ddd;
 }
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
-    .gallery-main {
-        height: 350px;
-    }
-    
-    .gallery-thumbnail {
-        width: 60px;
-        height: 45px;
-    }
-    
-    .gallery-nav-btn {
-        width: 40px;
-        height: 40px;
-    }
+  .gallery-main {
+    height: 350px;
+  }
+
+  .gallery-thumbnail {
+    width: 60px;
+    height: 45px;
+  }
+
+  .gallery-nav-btn {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 @media (max-width: 480px) {
-    .gallery-main {
-        height: 250px;
-    }
-    
-    .gallery-thumbnail {
-        width: 50px;
-        height: 40px;
-    }
-    
-    .gallery-toolbar {
-        padding: 5px;
-    }
-    
-    .gallery-tool-btn {
-        width: 32px;
-        height: 32px;
-    }
+  .gallery-main {
+    height: 250px;
+  }
+
+  .gallery-thumbnail {
+    width: 50px;
+    height: 40px;
+  }
+
+  .gallery-toolbar {
+    padding: 5px;
+  }
+
+  .gallery-tool-btn {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 /* Zoom hint tooltip */
 .gallery-zoom-hint {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 30px;
-    font-size: 16px;
-    opacity: 0;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    pointer-events: none;
-    z-index: 30;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    font-weight: 500;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  z-index: 30;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-weight: 500;
 }
 
 .gallery-zoom-hint.visible {
-    opacity: 0.9;
-    animation: pulse 2s infinite;
+  opacity: 0.9;
+  animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-    0% {
-        transform: translate(-50%, -50%) scale(1);
-    }
-    50% {
-        transform: translate(-50%, -50%) scale(1.05);
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(1);
-    }
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
 /* Zoom notification - appears briefly when zoom action is triggered */
 .gallery-zoom-notification {
-    position: absolute;
-    bottom: 80px;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 30px;
-    font-size: 16px;
-    opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 1100; /* Above everything else */
-    font-weight: 500;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-    text-align: center;
-    pointer-events: none; /* Don't interfere with clicks */
-    border: 1px solid rgba(255, 255, 255, 0.2);
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 16px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 1100; /* Above everything else */
+  font-weight: 500;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  pointer-events: none; /* Don't interfere with clicks */
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .gallery-zoom-notification.visible {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 /* Fullscreen help tooltip - appears when entering fullscreen mode */
 .gallery-fullscreen-help {
-    position: absolute;
-    bottom: 130px;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 30px;
-    font-size: 16px;
-    opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 1100; /* Above everything else */
-    font-weight: 500;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-    text-align: center;
-    pointer-events: none; /* Don't interfere with clicks */
-    border: 1px solid rgba(255, 255, 255, 0.2);
+  position: absolute;
+  bottom: 130px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 16px;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 1100; /* Above everything else */
+  font-weight: 500;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  pointer-events: none; /* Don't interfere with clicks */
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .gallery-fullscreen-help.visible {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 
 /* Swipe Navigation Indicator */
 .gallery-swipe-indicator {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none; /* Don't capture mouse events */
-    z-index: 15;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* Don't capture mouse events */
+  z-index: 15;
 }
 
 .gallery-swipe-indicator.visible {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .gallery-swipe-indicator svg {
-    width: 30px;
-    height: 30px;
-    fill: white;
+  width: 30px;
+  height: 30px;
+  fill: white;
 }
 
 .gallery-swipe-indicator.next {
-    right: 20px;
+  right: 20px;
 }
 
 .gallery-swipe-indicator.prev {
-    left: 20px;
+  left: 20px;
 }
 
 /* Improve the swipe indicator in fullscreen mode */
 .gallery-fullscreen .gallery-swipe-indicator {
-    width: 70px;
-    height: 70px;
+  width: 70px;
+  height: 70px;
 }
 
 .gallery-fullscreen .gallery-swipe-indicator svg {
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
 }

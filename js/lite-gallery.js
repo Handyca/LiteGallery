@@ -96,11 +96,13 @@ class LiteGallery {
         }
 
         // Show zoom hint after a short delay
-        if (this.options.zoom) {
-            setTimeout(() => {
-                this.showZoomHint();
-            }, 1500);
-        }
+        // Uncomment the following line to enable zoom hint
+
+        // if (this.options.zoom) {
+        //     setTimeout(() => {
+        //         this.showZoomHint();
+        //     }, 1500);
+        // }
 
         // Handle keyboard navigation
         document.addEventListener('keydown', this.handleKeyboardNavigation.bind(this));
@@ -250,7 +252,7 @@ class LiteGallery {
             toolbar.appendChild(playPauseBtn);
         }
 
-        this.container.appendChild(toolbar);
+        this.mainView.appendChild(toolbar);
     }
 
     /**
@@ -315,8 +317,12 @@ class LiteGallery {
                 // Prevent event bubbling to ensure no other elements capture it
                 e.stopPropagation();
 
+                // Fullscreen toggle on double click removed as requested
+                if (!this.state.isDragging && !this.state.recentlyDragged && !this.state.isFullscreen) {
+                    this.toggleFullscreen();
+                }
                 // Only zoom if we're not dragging and haven't recently finished dragging
-                if (!this.state.isDragging && !this.state.recentlyDragged) {
+                if (!this.state.isDragging && !this.state.recentlyDragged && this.state.isFullscreen) {
                     // Get the zoom levels from options
                     const zoomLevels = this.options.zoomLevels;
 
